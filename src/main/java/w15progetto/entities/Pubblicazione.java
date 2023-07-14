@@ -24,6 +24,8 @@ import w15progetto.prestito.Prestito;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "pubblicazioni")
 @NamedQuery(name = "selectAll", query = "SELECT a FROM Pubblicazione a")
+@NamedQuery(name = "selectByYear", query = "SELECT a FROM Pubblicazione a WHERE a.annoPubblicazione = :annoPubblicazione")
+@NamedQuery(name = "selectByTitle", query = "SELECT a FROM Pubblicazione a WHERE a.titolo LIKE :titolo")
 public abstract class Pubblicazione {
 	@Transient
 	Faker faker = new Faker();

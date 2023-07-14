@@ -88,4 +88,64 @@ public class PubblicazioneDao {
 		pubblicazioni.forEach(el -> log.info(el.toString()));
 	}
 
+	public Pubblicazione searchByIsbn(long isbn) {
+		Pubblicazione found = em.find(Pubblicazione.class, isbn);
+		if (found != null) {
+			log.info("Pubblicazione con Isbn " + isbn + " : ");
+			log.info(found.toString());
+			return found;
+		} else {
+			log.info("Evento non trovato");
+		}
+
+		return null;
+	}
+
+	public void searchAndDestroy(long isbn) {
+		Pubblicazione found = em.find(Pubblicazione.class, isbn);
+		if (found != null) {
+			EntityTransaction t = em.getTransaction();
+
+			t.begin();
+
+			em.remove(found);
+			t.commit();
+
+			log.info(found.getTitolo() + " è stato rimosso correttamente");
+		} else {
+			log.info("Pubblicazione non trovata");
+		}
+	}
+
+	public List<Pubblicazione> searchByYear(LocalDate annoPubblicazione) {
+		try {
+			TypedQuery<Pubblicazione> getAllQuery = em.createNamedQuery("selectByYear", Pubblicazione.class);
+			getAllQuery.setParameter("annoPubblicazione", annoPubblicazione);
+			return getAllQuery.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("Pubblicazione non trovata");
+			return null;
+		}
+
+	}
+
+	public List<Libro> searchByAutore(String autore) {
+		try {
+			TypedQuery<Libro> getAllQuery = em.createNamedQuery("selectByAutore", Libro.class);
+			getAllQuery.setParameter("autore", autore);
+			return getAllQuery.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("Pubblicazione non trovata");
+			return null;
+		}
+
+	}
+
+	public List<Pubblicazione> searchByTitle(String titolo) {
+		TypedQuery<Pubblicazione> getAllQuery = em.createNamedQuery("selectByTitle", Pubblicazione.class);
+		getAllQuery.setParameter("titolo", titolo);
+	}
+
 }

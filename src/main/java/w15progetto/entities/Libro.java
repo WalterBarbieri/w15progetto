@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
 
 import com.github.javafaker.Faker;
@@ -13,6 +14,7 @@ import w15progetto.enums.Genere;
 
 @Entity
 @DiscriminatorValue("Libro")
+@NamedQuery(name = "selectByAutore", query = "SELECT a FROM Libro a WHERE a.autore = :autore")
 public class Libro extends Pubblicazione {
 	@Transient
 	Faker faker = new Faker();
