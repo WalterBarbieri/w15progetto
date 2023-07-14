@@ -1,0 +1,5 @@
+package w15progetto.enums;
+
+public enum Genere {
+	CLASSICI, SAGGISTICA, ROMANZO, STORIA, HORROR, FANTASY, FANTASCIENZA, FAVOLE, ARTE, CUCINA
+}
