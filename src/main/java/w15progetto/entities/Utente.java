@@ -19,6 +19,7 @@ import w15progetto.prestito.Prestito;
 @Entity
 @Table(name = "utenti")
 @NamedQuery(name = "selectAllUtenti", query = "SELECT a FROM Utente a")
+@NamedQuery(name = "selectRandomNUtenti", query = "SELECT a FROM Utente a ORDER BY RANDOM()")
 public class Utente {
 
 	@Transient

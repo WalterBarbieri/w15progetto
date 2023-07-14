@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import w15progetto.entities.Pubblicazione;
@@ -14,6 +15,10 @@ import w15progetto.entities.Utente;
 
 @Entity
 @Table(name = "prestiti")
+@NamedQuery(name = "selectAllPrestiti", query = "SELECT a FROM Prestito a")
+@NamedQuery(name = "selectByNumeroTessera", query = "SELECT a FROM Prestito a WHERE a.utente.numeroTessera = :numeroTessera")
+@NamedQuery(name = "selectScadutiToday", query = "SELECT a FROM Prestito a WHERE a.dataRestituzionePrevista < CURRENT_DATE AND a.dataRestituzioneEffettiva > a.dataRestituzionePrevista")
+@NamedQuery(name = "selectScaduti", query = "SELECT a FROM Prestito a WHERE a.dataRestituzionePrevista < :currentDate AND a.dataRestituzioneEffettiva > a.dataRestituzionePrevista")
 public class Prestito {
 	@Id
 	@GeneratedValue
@@ -28,7 +33,7 @@ public class Prestito {
 	private Pubblicazione pubblicazione;
 
 	private LocalDate dataInizioPrestito;
-	private LocalDate dataRestituzionePrvista;
+	private LocalDate dataRestituzionePrevista;
 	private LocalDate dataRestituzioneEffettiva;
 
 	public Prestito() {
@@ -36,11 +41,11 @@ public class Prestito {
 	}
 
 	public Prestito(Utente utente, Pubblicazione pubblicazione, LocalDate dataInizioPrestito,
-			LocalDate dataRestituzionePrvista, LocalDate dataRestituzioneEffettiva) {
+			LocalDate dataRestituzionePrevista, LocalDate dataRestituzioneEffettiva) {
 		this.utente = utente;
 		this.pubblicazione = pubblicazione;
 		this.dataInizioPrestito = dataInizioPrestito;
-		this.dataRestituzionePrvista = dataRestituzionePrvista;
+		this.dataRestituzionePrevista = dataRestituzionePrevista;
 		this.dataRestituzioneEffettiva = dataRestituzioneEffettiva;
 	}
 
@@ -76,12 +81,12 @@ public class Prestito {
 		this.dataInizioPrestito = dataInizioPrestito;
 	}
 
-	public LocalDate getDataRestituzionePrvista() {
-		return dataRestituzionePrvista;
+	public LocalDate getDataRestituzionePrevista() {
+		return dataRestituzionePrevista;
 	}
 
-	public void setDataRestituzionePrvista(LocalDate dataRestituzionePrvista) {
-		this.dataRestituzionePrvista = dataRestituzionePrvista;
+	public void setDataRestituzionePrevista(LocalDate dataRestituzionePrevista) {
+		this.dataRestituzionePrevista = dataRestituzionePrevista;
 	}
 
 	public LocalDate getDataRestituzioneEffettiva() {
@@ -94,9 +99,9 @@ public class Prestito {
 
 	@Override
 	public String toString() {
-		return "Prestito [id=" + id + ", utente=" + utente + ", pubblicazione=" + pubblicazione
-				+ ", dataInizioPrestito=" + dataInizioPrestito + ", dataRestituzionePrvista=" + dataRestituzionePrvista
-				+ ", dataRestituzioneEffettiva=" + dataRestituzioneEffettiva + "]";
+		return "Prestito [Id: " + id + ", Utente: " + utente + ", Pubblicazione: " + pubblicazione
+				+ ", Data Inizio Prestito: " + dataInizioPrestito + ", Data Restituzione Prevista: "
+				+ dataRestituzionePrevista + ", Data Restituzione Effettiva=" + dataRestituzioneEffettiva + "]";
 	}
 
 }

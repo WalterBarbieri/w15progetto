@@ -63,4 +63,10 @@ public class UtenteDao {
 		utenti.forEach(el -> log.info(el.toString()));
 	}
 
+	public List<Utente> getRandomUtente(int numPrestito) {
+		TypedQuery<Utente> getAllQuery = em.createNamedQuery("selectRandomNUtenti", Utente.class);
+		getAllQuery.setMaxResults(numPrestito);
+		return getAllQuery.getResultList();
+	}
+
 }

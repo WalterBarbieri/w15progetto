@@ -144,8 +144,22 @@ public class PubblicazioneDao {
 	}
 
 	public List<Pubblicazione> searchByTitle(String titolo) {
-		TypedQuery<Pubblicazione> getAllQuery = em.createNamedQuery("selectByTitle", Pubblicazione.class);
-		getAllQuery.setParameter("titolo", titolo);
+		try {
+			TypedQuery<Pubblicazione> getAllQuery = em.createNamedQuery("selectByTitle", Pubblicazione.class);
+			getAllQuery.setParameter("titolo", titolo);
+			return getAllQuery.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("Pubblicazione non trovata");
+			return null;
+		}
+
+	}
+
+	public List<Pubblicazione> getRandomPubblicazione(int numPrestito) {
+		TypedQuery<Pubblicazione> getAllQuery = em.createNamedQuery("selectRandomNPubblicazioni", Pubblicazione.class);
+		getAllQuery.setMaxResults(numPrestito);
+		return getAllQuery.getResultList();
 	}
 
 }

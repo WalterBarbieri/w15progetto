@@ -26,6 +26,7 @@ import w15progetto.prestito.Prestito;
 @NamedQuery(name = "selectAll", query = "SELECT a FROM Pubblicazione a")
 @NamedQuery(name = "selectByYear", query = "SELECT a FROM Pubblicazione a WHERE a.annoPubblicazione = :annoPubblicazione")
 @NamedQuery(name = "selectByTitle", query = "SELECT a FROM Pubblicazione a WHERE a.titolo LIKE :titolo")
+@NamedQuery(name = "selectRandomNPubblicazioni", query = "SELECT a FROM Pubblicazione a ORDER BY RANDOM()")
 public abstract class Pubblicazione {
 	@Transient
 	Faker faker = new Faker();
